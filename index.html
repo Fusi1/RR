@@ -130,9 +130,15 @@
         destination: document.getElementById("destination").value
       };
 
-      const queryString = new URLSearchParams(data).toString();
+      fetch(scriptURL, {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      })
 
-      fetch(`${scriptURL}?${queryString}`)
         .then(res => res.json())
         .then(() => {
           alert("Viaggio aggiunto!");
