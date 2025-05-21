@@ -46,10 +46,7 @@
         body: JSON.stringify(json),
         headers: {
           "Content-Type": "application/json"
-        },
-        .then(res => res.text())
-        .then(data => console.log('Risposta:', data))
-        .catch(err => console.error('Errore:', err));
+        }
       });
 
       form.reset();
