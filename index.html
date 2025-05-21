@@ -12,18 +12,18 @@
   </style>
 </head>
 <body>
-  <h1>Registro Corse Auto</h1>
+  <h1>Racing Register</h1>
   <form id="corseForm">
     <input type="date" name="data" required />
     <input type="text" name="conducente" placeholder="Chi guida?" required />
     <input type="number" name="km" placeholder="KM percorsi" required />
-    <button type="submit">Aggiungi corsa</button>
+    <button type="submit">Add ride</button>
   </form>
 
-  <h2>Storico Corse</h2>
+  <h2>Racing History</h2>
   <table id="storico">
     <thead>
-      <tr><th>Data</th><th>Conducente</th><th>KM</th></tr>
+      <tr><th>Date</th><th>Driver</th><th>KM</th></tr>
     </thead>
     <tbody></tbody>
   </table>
@@ -36,8 +36,8 @@
       e.preventDefault();
       const data = new FormData(form);
       const json = {
-        data: data.get('data'),
-        conducente: data.get('conducente'),
+        data: data.get('date'),
+        conducente: data.get('driver'),
         km: parseFloat(data.get('km'))
       };
 
@@ -62,7 +62,7 @@
 
       dati.forEach(riga => {
         const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${riga.data}</td><td>${riga.conducente}</td><td>${riga.km}</td>`;
+        tr.innerHTML = `<td>${riga.date}</td><td>${riga.driver}</td><td>${riga.km}</td>`;
         tbody.appendChild(tr);
       });
     }
