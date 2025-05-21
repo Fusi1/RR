@@ -131,25 +131,24 @@
       };
 
       fetch(scriptURL, {
-        method: "POST",
-        mode: "cors",
+        method: 'POST',
+        mode: 'cors',
         headers: {
-          "Content-Type": "application/json"
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
       })
-
-        .then(res => res.json())
-        .then(() => {
-          alert("Viaggio aggiunto!");
-          this.reset();
-          loadData();
-        })
-        .catch(err => {
-          alert("Errore nell'inserimento.");
-          console.error(err);
-        });
+      .then(res => res.json())
+      .then(() => {
+        alert("Viaggio aggiunto!");
+        document.getElementById("viaggioForm").reset();
+        loadData();
+      })
+      .catch(err => {
+        alert("Errore nell'inserimento.");
+        console.error(err);
     });
+
 
     loadData();
   </script>
