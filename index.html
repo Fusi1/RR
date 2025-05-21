@@ -141,14 +141,14 @@
       .then(res => res.json())
       .then(() => {
         alert("Viaggio aggiunto!");
-        document.getElementById("viaggioForm").reset();
+        this.reset();
         loadData();
       })
       .catch(err => {
         alert("Errore nell'inserimento.");
         console.error(err);
+      });
     });
-
 
     loadData();
   </script>
