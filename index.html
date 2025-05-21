@@ -53,16 +53,16 @@
   <h2>Nuovo Viaggio</h2>
   <form id="viaggioForm">
     <label>Data</label>
-    <input type="date" id="dataViaggio" required>
+    <input type="date" id="date" required>
     
     <label>Km</label>
-    <input type="number" id="km" required>
+   <input type="number" id="km" required>
 
     <label>Autista</label>
-    <input type="text" id="autista" required>
+    <input type="text" id="driver" required>
 
     <label>Luogo</label>
-    <input type="text" id="luogo" required>
+    <input type="text" id="destination" required>
 
     <button type="submit">Aggiungi Viaggio</button>
   </form>
@@ -70,7 +70,7 @@
   <h2>Elenco Viaggi</h2>
   <table id="viaggiTable">
     <thead>
-      <tr><th>Data</th><th>Km</th><th>Autista</th><th>Luogo</th></tr>
+      <tr><th>Date</th><th>Km</th><th>Driver</th><th>Destination</th></tr>
     </thead>
     <tbody></tbody>
   </table>
@@ -124,11 +124,12 @@
     document.getElementById("viaggioForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const data = {
-        dataViaggio: document.getElementById("dataViaggio").value,
+        date: document.getElementById("date").value,
         km: document.getElementById("km").value,
-        autista: document.getElementById("autista").value,
-        luogo: document.getElementById("luogo").value
+        driver: document.getElementById("driver").value,
+        destination: document.getElementById("destination").value
       };
+
 
       fetch(scriptURL, {
         method: 'POST',
