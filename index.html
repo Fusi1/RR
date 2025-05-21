@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <title>Viaggi di Gruppo</title>
+  <title>Viaggi</title>
   <style>
     body {
       font-family: sans-serif;
@@ -29,7 +29,7 @@
   </style>
 </head>
 <body>
-  <h1>Viaggi di Gruppo</h1>
+  <h1>Viaggi</h1>
   <p>Elenco dei viaggi registrati:</p>
 
   <table id="viaggiTable">
@@ -47,8 +47,8 @@
   </table>
 
   <script>
-    const sheetID = 'INSERISCI_ID_SHEET';
-    const apiKey = 'INSERISCI_API_KEY';
+    const sheetID = '1-wRykmpLD1vNtqfzCuADbpM74PyOVZnTTGbmsQO06aw';
+    const apiKey = 'AIzaSyBziX1hSwdqn71MSZPGqElMF8ulTmczlaQ';
     const range = 'Foglio1!A2:D'; // Modifica se il foglio ha nome diverso
 
     fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetID}/values/${range}?key=${apiKey}`)
