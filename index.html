@@ -1,1 +1,152 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Viaggi</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 2rem;
+      background: #f9f9f9;
+    }
+    h1, h2 {
+      color: #333;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      margin-top: 1rem;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.5rem;
+      text-align: center;
+    }
+    th {
+      background-color: #e0e0e0;
+    }
+    form {
+      margin-top: 2rem;
+      background: #fff;
+      padding: 1rem;
+      border: 1px solid #ccc;
+    }
+    label {
+      display: block;
+      margin: 0.5rem 0 0.2rem;
+    }
+    input {
+      width: 100%;
+      padding: 0.4rem;
+      margin-bottom: 1rem;
+    }
+    button {
+      padding: 0.5rem 1rem;
+    }
+  </style>
+</head>
+<body>
 
+  <h1>Viaggi</h1>
+
+  <h2>Nuovo Viaggio</h2>
+  <form id="viaggioForm">
+    <label>Date</label>
+    <input type="date" id="date" required>
+    
+    <label>Km</label>
+    <input type="number" id="km" required>
+
+    <label>Driver</label>
+    <input type="text" id="driver" required>
+
+    <label>Destination</label>
+    <input type="text" id="destination" required>
+
+    <button type="submit">Aggiungi Viaggio</button>
+  </form>
+
+  <h2>Elenco Viaggi</h2>
+  <table id="viaggiTable">
+    <thead>
+      <tr><th>Date</th><th>Km</th><th>Driver</th><th>Destination</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <h2>Total Km per Driver</h2>
+  <ul id="riepilogoKm"></ul>
+
+  <script>
+    const sheetID = '1-wRykmpLD1vNtqfzCuADbpM74PyOVZnTTGbmsQO06aw';
+    const apiKey = 'AIzaSyBziX1hSwdqn71MSZPGqElMF8ulTmczlaQ';
+    const sheetRange = 'Foglio1!A2:D';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbw6C0-lNfv9zpBTH-eWqAdbcc2o_ZCSuct_0dMP5h-bO2euGM3rAtVOMT8McChbThTiTA/exec';
+
+    const tableBody = document.querySelector("#viaggiTable tbody");
+    const riepilogoKm = document.getElementById("riepilogoKm");
+
+    function loadData() {
+      fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetID}/values/${sheetRange}?key=${apiKey}`)
+        .then(res => res.json())
+        .then(data => {
+          const rows = data.values || [];
+          tableBody.innerHTML = "";
+          const totals = {};
+
+          rows.forEach(row => {
+            const tr = document.createElement("tr");
+            row.forEach(cell => {
+              const td = document.createElement("td");
+              td.textContent = cell;
+              tr.appendChild(td);
+            });
+            tableBody.appendChild(tr);
+
+            const driver = row[2];
+            const km = parseFloat(row[1]);
+            if (!isNaN(km)) {
+              totals[driver] = (totals[driver] || 0) + km;
+            }
+          });
+
+          riepilogoKm.innerHTML = "";
+          Object.entries(totals).forEach(([name, total]) => {
+            const li = document.createElement("li");
+            li.textContent = `${name}: ${total} km`;
+            riepilogoKm.appendChild(li);
+          });
+        });
+    }
+
+    document.getElementById("viaggioForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const data = {
+        date: document.getElementById("date").value,
+        km: document.getElementById("km").value,
+        driver: document.getElementById("driver").value,
+        destination: document.getElementById("destination").value
+      };
+
+      const queryString = new URLSearchParams(data).toString();
+
+      fetch(`${scriptURL}?${queryString}`)
+        .then(res => res.json())
+        .then(() => {
+          alert("Viaggio aggiunto!");
+          this.reset();
+          loadData();
+        })
+        .catch(err => {
+          alert("Errore nell'inserimento.");
+          console.error(err);
+        });
+    });
+
+    loadData();
+  </script>
+
+</body>
+</html>
