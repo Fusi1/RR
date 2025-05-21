@@ -133,8 +133,11 @@
 
       fetch(scriptURL, {
         method: 'POST',
-        body: JSON.stringify(data),
-        headers: { "Content-Type": "application/json" }
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
       })
       .then(res => res.json())
       .then(() => {
